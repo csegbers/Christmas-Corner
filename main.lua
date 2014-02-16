@@ -1,39 +1,14 @@
--- Project: Business Sample App
---
--- File name: main.lua
---
--- Author: Corona Labs
---
--- Abstract: Main entry point.
---
---
--- Target devices: simulator, device
---
--- Sample code is MIT licensed, see http://www.coronalabs.com/links/code/license
--- Copyright (C) 2013 Corona Labs Inc. All Rights Reserved.
----------------------------------------------------------------------------------------
---[[
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in the
-Software without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
-and to permit persons to whom the Software is furnished to do so, subject to the
-following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies
-or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-
-]]--
----------------------------------------------------------------------------------------
---display.setStatusBar( display.HiddenStatusBar )
+--====================================================================--
+-- Christmas Corner
+--====================================================================--
+local myApp = require( "myapp" ) 
+reallyPrint = print
+function print(...)
+    if myApp.debugMode then
+        reallyPrint(unpack(arg))
+    end
+end
+print("<-==================== Program Start ====================->") 
 
 --
 -- load in storyboard
@@ -41,7 +16,7 @@ DEALINGS IN THE SOFTWARE.
 local storyboard = require ( "storyboard" )
 local widget = require( "widget" )
 local json = require( "json" )
-local myApp = require( "myapp" ) 
+
 
 if (display.pixelHeight/display.pixelWidth) > 1.5 then
     myApp.isTall = true
@@ -59,24 +34,6 @@ if tonumber( system.getInfo("build") ) < 2013.2000 then
     -- we are a Graphics 1.0 build
     myApp.colorDivisor = 1
     myApp.isGraphics2 = false
-end
-
---
--- turn on debugging
---
-local debugMode = true
-
---
--- this little snippet will make a copy of the print function
--- and now will only print if debugMode is true
--- quick way to clean up your logging for production
---
-
-reallyPrint = print
-function print(...)
-    if debugMode then
-        reallyPrint(unpack(arg))
-    end
 end
 
 math.randomseed(os.time())
