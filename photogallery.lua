@@ -33,8 +33,10 @@ DEALINGS IN THE SOFTWARE.
 
 ]]--
 ---------------------------------------------------------------------------------------
-local storyboard = require( "storyboard" )
-local scene = storyboard.newScene()
+--local storyboard = require( "storyboard" )
+--local scene = storyboard.newScene()
+local composer = require( "composer" )
+local scene = composer.newScene()
 
 local widget = require("widget")
 local myApp = require("myapp")

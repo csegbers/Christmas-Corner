@@ -35,8 +35,10 @@ DEALINGS IN THE SOFTWARE.
 ---------------------------------------------------------------------------------------
 --
 
-local storyboard = require( "storyboard" )
-local scene = storyboard.newScene()
+--local storyboard = require( "storyboard" )
+--local scene = storyboard.newScene()
+local composer = require( "composer" )
+local scene = composer.newScene()
 
 local socket = require( "socket" )
 local widget = require( "widget" )
@@ -407,7 +409,7 @@ end
 -- Start the Storyboard event handlers
 --
 
-function scene:createScene( event )
+function scene:create( event )
     local group = self.view
 
     
@@ -486,43 +488,45 @@ function scene:createScene( event )
     group:insert(myList)
 end
 
-function scene:enterScene( event )
+function scene:show( event )
     local group = self.view
-
-    
+   
     params = event.params
+     
+    if event.phase = "did" then
+        print("enter scene")
+     
+        -- fetch the parameters from the storyboard table for this view
+        
+        feedName = params.feedName
+        feedURL = params.feedURL
+        displayMode = params.displayMode
+        pageTitle = params.pageTitle
+        icons = params.icons
 
-    print("enter scene")
- 
-    -- fetch the parameters from the storyboard table for this view
-    
-    feedName = params.feedName
-    feedURL = params.feedURL
-    displayMode = params.displayMode
-    pageTitle = params.pageTitle
-    icons = params.icons
-
-    --
-    -- go fetch the feed
-    --
-    native.setActivityIndicator(true)
-    print("enterScene", feedName,feedURL)
-    displayFeed(feedName, feedURL)
-
+        --
+        -- go fetch the feed
+        --
+        native.setActivityIndicator(true)
+        print("enterScene", feedName,feedURL)
+        displayFeed(feedName, feedURL)
+    end
 end
 
-function scene:exitScene( event )
+function scene:hide( event )
     local group = self.view
     
     -- get out of here.
     -- dump the table entries
     --
-    print("exit scene")
-    purgeList(myList)
+    if event.phase = "did" then
+        print("exit scene")
+        purgeList(myList)
+    end
     
 end
 
-function scene:destoryScene( event )
+function scene:destroy( event )
     local group = self.view
     
     print("destroy scene")
@@ -533,19 +537,22 @@ end
 -- END OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
--- "createScene" event is dispatched if scene's view does not exist
-scene:addEventListener( "createScene", scene )
 
--- "enterScene" event is dispatched whenever scene transition has finished
-scene:addEventListener( "enterScene", scene )
+--scene:addEventListener( "createScene", scene )
 
--- "exitScene" event is dispatched before next scene's transition begins
-scene:addEventListener( "exitScene", scene )
 
--- "destroyScene" event is dispatched before view is unloaded, which can be
--- automatically unloaded in low memory situations, or explicitly via a call to
--- storyboard.purgeScene() or storyboard.removeScene().
-scene:addEventListener( "destroyScene", scene )
+--scene:addEventListener( "enterScene", scene )
+
+
+--scene:addEventListener( "exitScene", scene )
+
+
+--scene:addEventListener( "destroyScene", scene )
+
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 
 ---------------------------------------------------------------------------------
 

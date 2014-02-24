@@ -2,42 +2,19 @@
 -- Christmas Corner
 --====================================================================--
 local myApp = require( "myapp" ) 
-reallyPrint = print
-function print(...)
-    if myApp.debugMode then
-        reallyPrint(unpack(arg))
-    end
-end
-print("<-==================== Program Start ====================->") 
-
+print("Program Start") 
 --
 -- load in storyboard
 --
-local storyboard = require ( "storyboard" )
+--local storyboard = require ( "storyboard" )
+local composer = require( "composer" )
 local widget = require( "widget" )
 local json = require( "json" )
 
-
-if (display.pixelHeight/display.pixelWidth) > 1.5 then
-    myApp.isTall = true
-end
-
-if display.contentWidth > 320 then
-    myApp.is_iPad = true
-end
-
---
--- Handle Graphics 2.0 changes
-myApp.colorDivisor = 255
-myApp.isGraphics2 = true
-if tonumber( system.getInfo("build") ) < 2013.2000 then
-    -- we are a Graphics 1.0 build
-    myApp.colorDivisor = 1
-    myApp.isGraphics2 = false
-end
-
 math.randomseed(os.time())
-
+composer.isDebug = myApp.debugMode
+composer.recycleOnSceneChange = true
+print "SDSD"
 --
 -- Load our fonts and define our styles
 --
@@ -104,8 +81,8 @@ myApp.tabBar = {}
 
 function myApp.showScreen1()
     myApp.tabBar:setSelected(1)
-    storyboard.removeAll()
-    storyboard.gotoScene("menu", {time=250, effect="crossFade"})
+   -- storyboard.removeAll()
+    composer.gotoScene("menu", {time=250, effect="crossFade"})
     return true
 end
 
@@ -118,15 +95,15 @@ function myApp.showScreen2()
         displayMode = "webpage",
         pageTitle = "Corona Labs"
     }
-    storyboard.removeAll()
-    storyboard.gotoScene("feed", {time=250, effect="crossFade", params = options})
+   -- storyboard.removeAll()
+    composer.gotoScene("feed", {time=250, effect="crossFade", params = options})
     return true
 end
 
 function myApp.showScreen3()
     myApp.tabBar:setSelected(3)
-    storyboard.removeAll()
-    storyboard.gotoScene("photogallery", {time=250, effect="crossFade"})
+    --storyboard.removeAll()
+    composer.gotoScene("photogallery", {time=250, effect="crossFade"})
     return true
 end
 
@@ -139,8 +116,8 @@ function myApp.showScreen4()
         displayMode = "videoviewer",
         pageTitle = "Corona Videos"
     }
-    storyboard.removeAll()
-    storyboard.gotoScene("feed2", {time=250, effect="crossFade", params = options})
+   -- storyboard.removeAll()
+    composer.gotoScene("feed2", {time=250, effect="crossFade", params = options})
     return true
 end
 
@@ -150,8 +127,8 @@ function myApp.showScreen5()
 
         pageTitle = "Corona Headquarters"
     }
-    storyboard.removeAll()
-    storyboard.gotoScene("mapscene", {time=250, effect="crossFade", params = options})
+   -- storyboard.removeAll()
+    composer.gotoScene("mapscene", {time=250, effect="crossFade", params = options})
     return true
 end
 
