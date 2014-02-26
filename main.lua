@@ -4,7 +4,7 @@
 local myApp = require( "myapp" ) 
 print("Program Start") 
 --
--- load in storyboard
+-- load in storyboard 
 --
 --local storyboard = require ( "storyboard" )
 local composer = require( "composer" )
@@ -14,7 +14,6 @@ local json = require( "json" )
 math.randomseed(os.time())
 composer.isDebug = myApp.debugMode
 composer.recycleOnSceneChange = true
-print "SDSD"
 --
 -- Load our fonts and define our styles
 --
@@ -82,6 +81,7 @@ myApp.tabBar = {}
 function myApp.showScreen1()
     myApp.tabBar:setSelected(1)
    -- storyboard.removeAll()
+   print "goto scene1"
     composer.gotoScene("menu", {time=250, effect="crossFade"})
     return true
 end

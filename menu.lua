@@ -41,7 +41,7 @@ local scene = composer.newScene()
 local widget = require( "widget" )
 local myApp = require( "myapp" )
 
-print "HELLO"
+print "menu hello"
 
 widget.setTheme(myApp.theme)
 
@@ -54,7 +54,8 @@ local function ignoreTouch( event )
 	return true
 end
 
-function scene:createScene(event)
+function scene:create(event)
+        print "menu createscene"
 	local group = self.view
 
 
@@ -168,12 +169,12 @@ function scene:createScene(event)
  
 end
 
-function scene:enterScene( event )
+function scene:show( event )
 	local group = self.view
 
 end
 
-function scene:exitScene( event )
+function scene:hide( event )
 	local group = self.view
 
 	--
@@ -182,13 +183,13 @@ function scene:exitScene( event )
 
 end
 
-function scene:destroyScene( event )
+function scene:destroy( event )
 	local group = self.view
 end
 
-scene:addEventListener( "createScene", scene )
-scene:addEventListener( "enterScene", scene )
-scene:addEventListener( "exitScene", scene )
-scene:addEventListener( "destroyScene", scene )
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 
 return scene
