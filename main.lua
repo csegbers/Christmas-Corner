@@ -2,6 +2,17 @@
 -- Christmas Corner
 --====================================================================--
 local myApp = require( "myapp" ) 
+-------------------------------------------------------
+-- Override print function make global
+-------------------------------------------------------
+reallyPrint = print
+function print(...)
+    if myApp.debugMode then
+        reallyPrint("<-==============================================->") 
+        reallyPrint(unpack(arg))
+    end
+end
+
 print("Program Start") 
 --
 -- load in storyboard 
@@ -55,26 +66,6 @@ else
     myApp.fontBoldItalic = "Helvetica-BoldItalic"
 end
 widget.setTheme(myApp.theme)
---
--- These next functions, showScreen1 - showScreen4 are the functions that are
--- triggered when the user taps the buttons in the bottom tabView
---
---
--- These should be pretty straight forward.  You need to provide a local file 
--- name to download the feed to (feedName), the URL to fetch from, displayMode
--- can be either "podcaset" or "webpage", which tells the module how to handle
--- the story body.
--- pageTitle is the thing that shows at the top of the list view.
---
---
--- The variable "storyboard" is just a Lua table that is returned from the 
--- require("storyboard" above.  As such, I can freely add members/attributes/entries
--- to the table.  By using this technique, I can quickly pass data between 
--- storyboard scenes.  It's like making them global without the penalties of 
--- making them global.  There is one catch... Corona Labs could come along and 
--- add theor own "displayMode" member (or any of them) later and trump yours
--- but the risk is minmal.
---
 
 myApp.tabBar = {}
 

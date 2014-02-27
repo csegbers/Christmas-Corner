@@ -3,18 +3,11 @@
 -- Store variables used across the app
 -------------------------------------------------------
 local M = { 
-			debugMode = true,
-          }
--------------------------------------------------------
--- Override print function
--------------------------------------------------------
-reallyPrint = print
-function print(...)
-    if M.debugMode then
-        reallyPrint("<-==============================================->") 
-        reallyPrint(unpack(arg))
-    end
-end
+            debugMode = true,
+            appName = "Christmas Corner" 
+        }
+
+
 print "In myapp.lua"
 
 -------------------------------------------------------

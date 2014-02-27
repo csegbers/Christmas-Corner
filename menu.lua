@@ -40,6 +40,7 @@ local scene = composer.newScene()
 
 local widget = require( "widget" )
 local myApp = require( "myapp" )
+print ("sdsd"..myApp.appName)
 
 print "menu hello"
 
@@ -83,7 +84,7 @@ function scene:create(event)
     -- the viewer is on
 
     -- create embossed text to go above toolbar
-    titleText = display.newText( "Corona Labs Menu", 0, 0, myApp.fontBold, 20 )
+    titleText = display.newText( myApp.appName, 0, 0, myApp.fontBold, 20 )
     if myApp.isGraphics2 then
         titleText:setFillColor(1, 1, 1)
     else
