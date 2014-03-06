@@ -4,7 +4,9 @@
 -------------------------------------------------------
 local M = { 
             debugMode = true,
-            appName = "Christmas Corner" 
+            appName = "Christmas Corner Initial" ,
+            ParseAPPID = 'xx',
+            ParseRESTAPIKEY = 'xx',
         }
 
 

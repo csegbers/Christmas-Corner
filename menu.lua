@@ -41,6 +41,7 @@ local scene = composer.newScene()
 local widget = require( "widget" )
 local myApp = require( "myapp" )
 print ("sdsd"..myApp.appName)
+ 
 
 print "menu hello"
 

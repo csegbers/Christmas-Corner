@@ -18,10 +18,12 @@ print("Program Start")
 -- load in storyboard 
 --
 --local storyboard = require ( "storyboard" )
+local parse = require( "parse" )
 local composer = require( "composer" )
 local widget = require( "widget" )
 local json = require( "json" )
 
+parse.parseGetConfig()
 math.randomseed(os.time())
 composer.isDebug = myApp.debugMode
 composer.recycleOnSceneChange = true
