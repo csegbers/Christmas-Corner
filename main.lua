@@ -23,6 +23,8 @@ local composer = require( "composer" )
 local widget = require( "widget" )
 local json = require( "json" )
 
+print ("After Main Requires")
+
 parse.parseGetConfig()
 math.randomseed(os.time())
 composer.isDebug = myApp.debugMode
@@ -246,5 +248,5 @@ local function closeSplash()
     myApp.showScreen1()
 end
 
-timer.performWithDelay(1500, closeSplash)
+timer.performWithDelay(myApp.splashDelay, closeSplash)
 

@@ -5,8 +5,13 @@
 local M = { 
             debugMode = true,
             appName = "Christmas Corner Initial" ,
-            ParseAPPID = 'xx',
-            ParseRESTAPIKEY = 'xx',
+            splashDelay = 15,    -- milliseconds
+            parse = {
+                        appId = '',
+                        restApikey = '',
+                        getConfig = "https://api.parse.com/1/functions/getconfig",
+                    },
+
         }
 
 
