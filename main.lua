@@ -2,22 +2,9 @@
 -- Christmas Corner
 --====================================================================--
 local myApp = require( "myapp" ) 
--------------------------------------------------------
--- Override print function make global
--------------------------------------------------------
-reallyPrint = print
-function print(...)
-    if myApp.debugMode then
-        reallyPrint("<-==============================================->") 
-        reallyPrint(unpack(arg))
-    end
-end
 
 print("Program Start") 
 --
--- load in storyboard 
---
---local storyboard = require ( "storyboard" )
 local parse = require( "parse" )
 local composer = require( "composer" )
 local widget = require( "widget" )

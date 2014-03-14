@@ -7,13 +7,28 @@ local M = {
             appName = "Christmas Corner Initial" ,
             splashDelay = 15,    -- milliseconds
             parse = {
-                        appId = '',
+                         appId = '',
                         restApikey = '',
-                        getConfig = "https://api.parse.com/1/functions/getconfig",
+                       getConfig = "https://api.parse.com/1/functions/getconfig",
                     },
 
         }
 
+-------------------------------------------------------
+-- Override print function make global
+-------------------------------------------------------
+reallyPrint = print
+function print(...)
+    if M.debugMode then
+        reallyPrint("<-==============================================->") 
+        reallyPrint(unpack(arg))
+    end
+end
+
+-------------------------------------------------------
+-- Seed random generator in case we use
+-------------------------------------------------------
+math.randomseed( os.time() )
 
 print "In myapp.lua"
 
