@@ -13,7 +13,7 @@ local json = require( "json" )
 print ("After Main Requires")
 
 parse.parseGetConfig()
-math.randomseed(os.time())
+
 composer.isDebug = myApp.debugMode
 composer.recycleOnSceneChange = true
 --
@@ -27,35 +27,7 @@ local tabBarRight = "images/tabBar_tabSelectedRight7.png"
 
 myApp.topBarBg = "images/topBarBg7.png"
 
-local iconInfo = {
-    width = 40,
-    height = 40,
-    numFrames = 20,
-    sheetContentWidth = 200,
-    sheetContentHeight = 160
-}
 
-myApp.icons = graphics.newImageSheet("images/ios7icons.png", iconInfo)
-
-if system.getInfo("platformName") == "Android" then
-    myApp.theme = "widget_theme_android"
-    myApp.font = "Droid Sans"
-    myApp.fontBold = "Droid Sans Bold"
-    myApp.fontItalic = "Droid Sans"
-    myApp.fontBoldItalic = "Droid Sans Bold"
-    myApp.topBarBg = "images/topBarBg7.png"
-
-else
-    myApp.theme = "widget_theme_ios7"
-    local coronaBuild = system.getInfo("build")
-    if tonumber(coronaBuild:sub(6,12)) < 1206 then
-        myApp.theme = "widget_theme_ios"
-    end
-    myApp.font = "HelveticaNeue-Light"
-    myApp.fontBold = "HelveticaNeue"
-    myApp.fontItalic = "HelveticaNeue-LightItalic"
-    myApp.fontBoldItalic = "Helvetica-BoldItalic"
-end
 widget.setTheme(myApp.theme)
 
 myApp.tabBar = {}
@@ -130,8 +102,8 @@ local tabButtons = {
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
         labelColor = { 
-            default = { 64/myApp.colorDivisor, 64/myApp.colorDivisor, 64/myApp.colorDivisor }, 
-            over = { 196/myApp.colorDivisor, 132/myApp.colorDivisor, 64/myApp.colorDivisor }
+            default = myApp.colorGray,   
+            over = myApp.saColor,  
         },
         width = 32,
         height = 32,
@@ -142,9 +114,9 @@ local tabButtons = {
         label = "Blogs",
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = { 64/myApp.colorDivisor, 64/myApp.colorDivisor, 64/myApp.colorDivisor }, 
-            over = { 196/myApp.colorDivisor, 132/myApp.colorDivisor, 64/myApp.colorDivisor }
+         labelColor = { 
+            default = myApp.colorGray,  
+            over = myApp.saColor,  
         },
         width = 32,
         height = 32,
@@ -155,8 +127,8 @@ local tabButtons = {
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
         labelColor = { 
-            default = { 64/myApp.colorDivisor, 64/myApp.colorDivisor, 64/myApp.colorDivisor }, 
-            over = { 196/myApp.colorDivisor, 132/myApp.colorDivisor, 64/myApp.colorDivisor }
+            default = myApp.colorGray,  
+            over = myApp.saColor,  
         },
         width = 32,
         height = 32,
@@ -167,8 +139,8 @@ local tabButtons = {
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
         labelColor = { 
-            default = { 64/myApp.colorDivisor, 64/myApp.colorDivisor, 64/myApp.colorDivisor }, 
-            over = { 196/myApp.colorDivisor, 132/myApp.colorDivisor, 64/myApp.colorDivisor }
+            default = myApp.colorGray,  
+            over = myApp.saColor,  
         },
         width = 32,
         height = 32,
@@ -179,13 +151,13 @@ local tabButtons = {
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
         labelColor = { 
-            default = { 64/myApp.colorDivisor, 64/myApp.colorDivisor, 64/myApp.colorDivisor }, 
-            over = { 196/myApp.colorDivisor, 132/myApp.colorDivisor, 64/myApp.colorDivisor }
+            default = myApp.colorGray,  
+            over = myApp.saColor,  
         },
         width = 32,
         height = 32,
         onPress = myApp.showScreen5,
-    }
+    },
 }
 
 myApp.tabBar = widget.newTabBar{

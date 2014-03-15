@@ -100,8 +100,8 @@ function scene:create(event)
     	height = 40,
     	label = "Corona Blogs",
         labelColor = { 
-            default = { 232/myApp.colorDivisor, 153/myApp.colorDivisor, 87/myApp.colorDivisor, 255/myApp.colorDivisor }, 
-            over = { 202/myApp.colorDivisor/myApp.colorDivisor, 123/myApp.colorDivisor, 77/myApp.colorDivisor, 255/myApp.colorDivisor} 
+            default =  myApp.saColor, 
+            over = myApp.saColorTrans, 
         },
     	labelYOffset = -4, 
     	font = myApp.font,
