@@ -5,7 +5,7 @@
 local M = { 
             debugMode = true,
             appName = "Christmas Corner Initial" ,
-            splashDelay = 15,    -- milliseconds
+            splashDelay = 150,    -- milliseconds
             parse = {
                          appId = '',
                         restApikey = '',

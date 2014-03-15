@@ -209,30 +209,38 @@ background:setFillColor(255/myApp.colorDivisor,255/myApp.colorDivisor,255/myApp.
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 
-local logo = display.newImageRect("Splash.png", 320, 480)
+local logo = display.newImageRect("salogo.jpg",305,170)
 logo.x = display.contentCenterX
 logo.y = display.contentCenterY
 
-local title = display.newText("Business Sample App", 0, 0, myApp.fontBold, 28)
-if myApp.isGraphics2 then
-    title:setFillColor( 0 )
-else
-    title:setTextColor(0)
-end
-title.x = display.contentCenterX
-title.y = display.contentHeight - 64
+-- local title = display.newText(myApp.appName, 0, 0, myApp.fontBold, 28)
+-- if myApp.isGraphics2 then
+--     title:setFillColor( 0 )
+-- else
+--     title:setTextColor(0)
+-- end
+-- title.x = display.contentCenterX
+-- title.y = display.contentHeight - 64
 --
 -- now make the first tab active.align
 --
 
 local function closeSplash()
-    display.remove(title)
-    title = nil
-    display.remove(logo)
-    logo = nil
-    display.remove(background)
-    background = nil
-    myApp.showScreen1()
+   local function closeSplashFinal()
+            -- display.remove(title)
+                -- title = nil
+                display.remove(logo)
+                logo = nil
+                display.remove(background)
+                background = nil
+                myApp.showScreen1()
+    end
+    local function closeSplash1()
+            transition.to( logo, {time=1500, alpha=0, x=(display.contentWidth+50), y=(display.contentHeight-500), onComplete=closeSplashFinal } )
+    end
+
+
+    transition.to( logo.path, { time=1500, x2=20, y2=-20, x4=-40, y4=40 , onComplete=closeSplash1 } )
 end
 
 timer.performWithDelay(myApp.splashDelay, closeSplash)
