@@ -100,8 +100,8 @@ function scene:createScene( event )
     backButton = widget.newButton({
         width =  59,
         height = 32,
-        defaultFile = "images/backbutton7_white.png",
-        overFile = "images/backbutton7_white.png",
+        defaultFile = myApp.imgfld .. "backbutton7_white.png",
+        overFile = myApp.imgfld .. "backbutton7_white.png",
         onRelease = goBack
     })
     backButton.y = titleBar.y

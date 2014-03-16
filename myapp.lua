@@ -13,6 +13,7 @@ local M = {
             colorDivisor = 255,
             isGraphics2 = true,
             is_iPad = false,
+            imgfld = "images/",
             theme = "widget_theme_ios7",
             font = "HelveticaNeue-Light",
             fontBold = "HelveticaNeue",
@@ -24,6 +25,37 @@ local M = {
                         getConfig = "https://api.parse.com/1/functions/getconfig",
 
                     },
+            tabs = {
+                        tabbtnw = 32,tabbtnh = 32,
+                        home = {label="Home",lua="menu",sel=1,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                        blogs = {
+                                  label="Blogs",lua="feed",sel=2,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                  options = {
+                                        feedName = "corona.rss",
+                                        feedURL = "http://www.coronalabs.com/feed/",
+                                        icons = "fixed",
+                                        displayMode = "webpage",
+                                        pageTitle = "Corona Labs"
+                                             }
+                                  },
+                       pics = {label="Pics",lua="photogallery",sel=3,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                       video = {
+                                    label="Video",lua="feed2",sel=4,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                    options = {
+                                            feedName = "video.rss",
+                                            feedURL = "http://gdata.youtube.com/feeds/mobile/users/CoronaLabs/uploads?max-results=20&alt=rss&orderby=published&format=1",
+                                            icons = "fixed",
+                                            displayMode = "videoviewer",
+                                            pageTitle = "Corona Videos"
+                                               }                                
+                                },
+                       maps = {
+                                    label="Maps",lua="mapscene",sel=5,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                    options = {
+                                            pageTitle = "Corona Headquarters"
+                                             }                              
+                                },
+                   },
 
         }
 
@@ -37,13 +69,12 @@ function print(...)
         reallyPrint(unpack(arg))
     end
 end
+print "In myapp.lua"
 
 -------------------------------------------------------
 -- Seed random generator in case we use
 -------------------------------------------------------
 math.randomseed( os.time() )
-
-print "In myapp.lua"
 
 -------------------------------------------------------
 -- Set app variables
@@ -52,9 +83,7 @@ if (display.pixelHeight/display.pixelWidth) > 1.5 then
     M.isTall = true
 end
 
-if display.contentWidth > 320 then
-    M.is_iPad = true
-end
+if display.contentWidth > 320 then M.is_iPad = true end
 
 --
 -- Handle Graphics 2.0 changes
@@ -74,12 +103,10 @@ if system.getInfo("platformName") == "Android" then
     myApp.fontBold = "Droid Sans Bold"
     myApp.fontItalic = "Droid Sans"
     myApp.fontBoldItalic = "Droid Sans Bold"
-    myApp.topBarBg = "images/topBarBg7.png"
+    myApp.topBarBg = M.imgfld .. "topBarBg7.png"
 else
     local coronaBuild = system.getInfo("build")
-    if tonumber(coronaBuild:sub(6,12)) < 1206 then
-        myApp.theme = "widget_theme_ios"
-    end
+    if tonumber(coronaBuild:sub(6,12)) < 1206 then myApp.theme = "widget_theme_ios" end
 end
 
 local iconInfo = {
@@ -90,6 +117,6 @@ local iconInfo = {
     sheetContentHeight = 160
 }
 
-M.icons = graphics.newImageSheet("images/ios7icons.png", iconInfo)
+M.icons = graphics.newImageSheet(M.imgfld.. "ios7icons.png", iconInfo)
 
 return M

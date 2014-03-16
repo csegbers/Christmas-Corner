@@ -464,14 +464,14 @@ function scene:create( event )
     -- build a new tableView
     local tWidth = 320
     local tHeight = 380
-    local maskFile = "images/mask-320x380.png"
+    local maskFile = myApp.imgfld .. "mask-320x380.png"
     if myApp.is_iPad then
         tWidth = 360
-        maskFile = "images/mask-360x380.png"
+        maskFile = myApp.imgfld .. "mask-360x380.png"
     end
     if myApp.isTall then
         tHeight = 448
-        maskFile = "images/mask-320x448.png"
+        maskFile = myApp.imgfld .. "mask-320x448.png"
     end
 
     myList = widget.newTableView{ 
@@ -493,7 +493,7 @@ function scene:show( event )
    
     params = event.params
      
-    if event.phase = "did" then
+    if event.phase == "did" then
         print("enter scene")
      
         -- fetch the parameters from the storyboard table for this view
@@ -519,7 +519,7 @@ function scene:hide( event )
     -- get out of here.
     -- dump the table entries
     --
-    if event.phase = "did" then
+    if event.phase == "did" then
         print("exit scene")
         purgeList(myList)
     end

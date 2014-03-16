@@ -73,7 +73,7 @@ local function addStarbucks( event , id )
 		subtitle=starbucksLocations[id], 
 	    imageFile = 
 	    {
-    	    filename = "images/starbucks.png",
+    	    filename = myApp.imgfld .. "starbucks.png",
         	baseDir = system.ResourcesDirectory
     	},
 		listener=markerListener 
@@ -90,7 +90,7 @@ local function mapLocationHandler(event)
     	subtitle="World HQ", 
 	    imageFile = 
 	    {
-    	    filename = "images/coronamarker.png",
+    	    filename = myApp.imgfld .. "coronamarker.png",
         	baseDir = system.ResourcesDirectory
     	},
        	listener=markerListener 

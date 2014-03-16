@@ -2,87 +2,39 @@
 -- Christmas Corner
 --====================================================================--
 local myApp = require( "myapp" ) 
-
-print("Program Start") 
---
+------------------------------------------------------
+print("main: Program Start") 
+------------------------------------------------------
 local parse = require( "parse" )
 local composer = require( "composer" )
 local widget = require( "widget" )
-local json = require( "json" )
-
-print ("After Main Requires")
-
+------------------------------------------------------
+print ("main: After Main Requires")
+------------------------------------------------------
 parse.parseGetConfig()
-
+------------------------------------------------------
 composer.isDebug = myApp.debugMode
 composer.recycleOnSceneChange = true
+widget.setTheme(myApp.theme)
 --
 -- Load our fonts and define our styles
 --
+local tabBarBackgroundFile = myApp.imgfld .. "tabBarBg7.png"
+local tabBarLeft = myApp.imgfld .. "tabBar_tabSelectedLeft7.png"
+local tabBarMiddle = myApp.imgfld .. "tabBar_tabSelectedMiddle7.png"
+local tabBarRight = myApp.imgfld .. "tabBar_tabSelectedRight7.png"
 
-local tabBarBackgroundFile = "images/tabBarBg7.png"
-local tabBarLeft = "images/tabBar_tabSelectedLeft7.png"
-local tabBarMiddle = "images/tabBar_tabSelectedMiddle7.png"
-local tabBarRight = "images/tabBar_tabSelectedRight7.png"
-
-myApp.topBarBg = "images/topBarBg7.png"
-
-
-widget.setTheme(myApp.theme)
-
+myApp.topBarBg = myApp.imgfld .. "topBarBg7.png"
 myApp.tabBar = {}
 
-function myApp.showScreen1()
-    myApp.tabBar:setSelected(1)
-   -- storyboard.removeAll()
-   print "goto scene1"
-    composer.gotoScene("menu", {time=250, effect="crossFade"})
-    return true
-end
-
-function myApp.showScreen2()
-    myApp.tabBar:setSelected(2)
-    local options = {
-        feedName = "corona.rss",
-        feedURL = "http://www.coronalabs.com/feed/",
-        icons = "fixed",
-        displayMode = "webpage",
-        pageTitle = "Corona Labs"
-    }
-   -- storyboard.removeAll()
-    composer.gotoScene("feed", {time=250, effect="crossFade", params = options})
-    return true
-end
-
-function myApp.showScreen3()
-    myApp.tabBar:setSelected(3)
-    --storyboard.removeAll()
-    composer.gotoScene("photogallery", {time=250, effect="crossFade"})
-    return true
-end
-
-function myApp.showScreen4()
-    myApp.tabBar:setSelected(4)
-    local options = {
-        feedName = "video.rss",
-        feedURL = "http://gdata.youtube.com/feeds/mobile/users/CoronaLabs/uploads?max-results=20&alt=rss&orderby=published&format=1",
-        icons = "fixed",
-        displayMode = "videoviewer",
-        pageTitle = "Corona Videos"
-    }
-   -- storyboard.removeAll()
-    composer.gotoScene("feed2", {time=250, effect="crossFade", params = options})
-    return true
-end
-
-function myApp.showScreen5()
-    myApp.tabBar:setSelected(5)
-    local options = {
-
-        pageTitle = "Corona Headquarters"
-    }
-   -- storyboard.removeAll()
-    composer.gotoScene("mapscene", {time=250, effect="crossFade", params = options})
+--------------------------------------------------
+-- Home screen
+--------------------------------------------------
+function myApp.showScreen(parms)
+    print ("goto " .. parms.key)
+    local tnt = myApp.tabs[parms.key]
+    myApp.tabBar:setSelected(tnt.sel)
+    composer.gotoScene(tnt.lua, {time=tnt.time, effect=tnt.effect, params = tnt.options})
     return true
 end
 
@@ -95,70 +47,29 @@ end
 -- graphic (non-selected buttons, a down-state button (the currently selected
 -- tab) selected will mark which button starts as active, and the onPress calls
 -- the function above to actually show each tab.
+local tabButtons = {}
+local function addtabBtn(tkey)
+    local tabitem = 
+        {
+            label = myApp.tabs[tkey].label,
+            defaultFile = myApp.tabs[tkey].def,
+            overFile = myApp.tabs[tkey].over,
+            labelColor = { 
+                default = myApp.colorGray,   
+                over = myApp.saColor,  
+            },
+            width = myApp.tabs.tabbtnw,
+            height = myApp.tabs.tabbtnh,
+            onPress = function () myApp.showScreen({key=tkey}) end,
+        }
+    table.insert(tabButtons, tabitem)
+end
 
-local tabButtons = {
-    {
-        label = "Menu",
-        defaultFile = "images/tabbaricon.png",
-        overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = myApp.colorGray,   
-            over = myApp.saColor,  
-        },
-        width = 32,
-        height = 32,
-        onPress = myApp.showScreen1,
-        selected = true
-    },
-    {
-        label = "Blogs",
-        defaultFile = "images/tabbaricon.png",
-        overFile = "images/tabbaricon-down.png",
-         labelColor = { 
-            default = myApp.colorGray,  
-            over = myApp.saColor,  
-        },
-        width = 32,
-        height = 32,
-        onPress = myApp.showScreen2,
-    },
-    {
-        label = "Pics",
-        defaultFile = "images/tabbaricon.png",
-        overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = myApp.colorGray,  
-            over = myApp.saColor,  
-        },
-        width = 32,
-        height = 32,
-        onPress = myApp.showScreen3,
-    },
-    {
-        label = "Video",
-        defaultFile = "images/tabbaricon.png",
-        overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = myApp.colorGray,  
-            over = myApp.saColor,  
-        },
-        width = 32,
-        height = 32,
-        onPress = myApp.showScreen4,
-    },
-    {
-        label = "Map",
-        defaultFile = "images/tabbaricon.png",
-        overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = myApp.colorGray,  
-            over = myApp.saColor,  
-        },
-        width = 32,
-        height = 32,
-        onPress = myApp.showScreen5,
-    },
-}
+addtabBtn("home")
+addtabBtn("blogs")
+addtabBtn("pics")
+addtabBtn("video")
+addtabBtn("maps")
 
 myApp.tabBar = widget.newTabBar{
     top =  display.contentHeight - 50 ,
@@ -195,7 +106,7 @@ logo.y = display.contentCenterY
 -- title.y = display.contentHeight - 64
 --
 -- now make the first tab active.align
---
+
 
 local function closeSplash()
    local function closeSplashFinal()
@@ -203,13 +114,18 @@ local function closeSplash()
                 -- title = nil
                 display.remove(logo)
                 logo = nil
-                display.remove(background)
-                background = nil
-                myApp.showScreen1()
+                local function removeBack()
+                   display.remove(background)
+                   background = nil
+                end
+                transition.to( background, {time=1500, alpha=0 , onComplete=removeBack } )
+
+                myApp.showScreen({key="home"})
     end
     local function closeSplash1()
             transition.to( logo, {time=1500, alpha=0, x=(display.contentWidth+50), y=(display.contentHeight-500), onComplete=closeSplashFinal } )
-    end
+
+   end
 
 
     transition.to( logo.path, { time=1500, x2=20, y2=-20, x4=-40, y4=40 , onComplete=closeSplash1 } )

@@ -468,14 +468,14 @@ function scene:createScene( event )
     -- build a new tableView
     local tWidth = 320
     local tHeight = 380
-    local maskFile = "images/mask-320x380.png"
+    local maskFile = myApp.imgfld .. "mask-320x380.png"
     if myApp.is_iPad then
         tWidth = 360
-        maskFile = "images/mask-360x380.png"
+        maskFile = myApp.imgfld .. "mask-360x380.png"
     end
     if myApp.isTall then
         tHeight = 448
-        maskFile = "images/mask-320x448.png"
+        maskFile = myApp.imgfld .. "mask-320x448.png"
     end
 
     myList = widget.newTableView{ 

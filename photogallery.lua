@@ -73,7 +73,7 @@ local function showPhoto(event)
 	return true
 end
 
-function scene:createScene( event )
+function scene:create( event )
     local group = self.view
 
     local background = display.newRect(0,0,display.contentWidth, display.contentHeight)
@@ -153,12 +153,12 @@ function scene:createScene( event )
     print("Memory", system.getInfo("textureMemoryUsed") / (1024 * 1024))
 end
 
-function scene:enterScene( event )
+function scene:show( event )
     local group = self.view
     
 end
 
-function scene:exitScene( event )
+function scene:hide( event )
     local group = self.view
 
     --
@@ -167,7 +167,7 @@ function scene:exitScene( event )
     
 end
 
-function scene:destoryScene( event )
+function scene:destory( event )
     local group = self.view
     
 end
@@ -177,10 +177,10 @@ end
 -- END OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
-scene:addEventListener( "createScene", scene )
-scene:addEventListener( "enterScene", scene )
-scene:addEventListener( "exitScene", scene )
-scene:addEventListener( "destroyScene", scene )
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 
 ---------------------------------------------------------------------------------
 
