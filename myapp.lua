@@ -27,9 +27,10 @@ local M = {
                     },
             tabs = {
                         tabbtnw = 32,tabbtnh = 32,
-                        home = {label="Home",lua="menu",sel=1,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                        home = {label="Home",lua="home",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                        menu = {label="Menu",lua="menu",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
                         blogs = {
-                                  label="Blogs",lua="feed",sel=2,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                  label="Blogs",lua="feed",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
                                   options = {
                                         feedName = "corona.rss",
                                         feedURL = "http://www.coronalabs.com/feed/",
@@ -38,9 +39,9 @@ local M = {
                                         pageTitle = "Corona Labs"
                                              }
                                   },
-                       pics = {label="Pics",lua="photogallery",sel=3,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                       pics = {label="Pics",lua="photogallery",stime=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
                        video = {
-                                    label="Video",lua="feed2",sel=4,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                    label="Video",lua="feed2",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
                                     options = {
                                             feedName = "video.rss",
                                             feedURL = "http://gdata.youtube.com/feeds/mobile/users/CoronaLabs/uploads?max-results=20&alt=rss&orderby=published&format=1",
@@ -50,7 +51,7 @@ local M = {
                                                }                                
                                 },
                        maps = {
-                                    label="Maps",lua="mapscene",sel=5,time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                    label="Maps",lua="mapscene",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
                                     options = {
                                             pageTitle = "Corona Headquarters"
                                              }                              

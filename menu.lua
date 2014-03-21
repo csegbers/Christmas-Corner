@@ -69,31 +69,31 @@ function scene:create(event)
 	group:insert(background)
 	background:addEventListener("touch", ignoreTouch)
 
-    local statusBarBackground = display.newImageRect(myApp.topBarBg, display.contentWidth, display.topStatusBarContentHeight)
-    statusBarBackground.x = display.contentCenterX
-    statusBarBackground.y = display.topStatusBarContentHeight * 0.5  
-    group:insert(statusBarBackground)
-    --
-    -- Create the other UI elements
-    -- create toolbar to go at the top of the screen
-    local titleBar = display.newImageRect(myApp.topBarBg, display.contentWidth, 50)
-    titleBar.x = display.contentCenterX
-    titleBar.y = 25 + display.topStatusBarContentHeight 
-    group:insert(titleBar)
-    --
-    -- set up the text for the title bar, will be changed based on what page
-    -- the viewer is on
+    -- local statusBarBackground = display.newImageRect(myApp.topBarBg, display.contentWidth, display.topStatusBarContentHeight)
+    -- statusBarBackground.x = display.contentCenterX
+    -- statusBarBackground.y = display.topStatusBarContentHeight * 0.5  
+    -- group:insert(statusBarBackground)
+    -- --
+    -- -- Create the other UI elements
+    -- -- create toolbar to go at the top of the screen
+    -- local titleBar = display.newImageRect(myApp.topBarBg, display.contentWidth, 50)
+    -- titleBar.x = display.contentCenterX
+    -- titleBar.y = 25 + display.topStatusBarContentHeight 
+    -- group:insert(titleBar)
+    -- --
+    -- -- set up the text for the title bar, will be changed based on what page
+    -- -- the viewer is on
 
-    -- create embossed text to go above toolbar
-    titleText = display.newText( myApp.appName, 0, 0, myApp.fontBold, 20 )
-    if myApp.isGraphics2 then
-        titleText:setFillColor(1, 1, 1)
-    else
-        titleText:setTextColor( 255, 255, 255 )
-    end
-    titleText.x = display.contentCenterX
-    titleText.y = titleBar.height * 0.5 + display.topStatusBarContentHeight  
-    group:insert(titleText)
+    -- -- create embossed text to go above toolbar
+    -- titleText = display.newText( myApp.appName, 0, 0, myApp.fontBold, 20 )
+    -- if myApp.isGraphics2 then
+    --     titleText:setFillColor(1, 1, 1)
+    -- else
+    --     titleText:setTextColor( 255, 255, 255 )
+    -- end
+    -- titleText.x = display.contentCenterX
+    -- titleText.y = titleBar.height * 0.5 + display.topStatusBarContentHeight  
+    -- group:insert(titleText)
 
     local button1 = widget.newButton({
     	width = 160,
