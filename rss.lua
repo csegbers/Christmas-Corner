@@ -55,12 +55,15 @@ function feed(filename, base)
         if item.name == "sy:updateFrequency" then feed.sy.updateFrequency = item.value end
         if item.name == "sy:updatePeriod" then feed.sy.updatePeriod = item.value end
 
+
         if item.name == "item" then -- we have a story batman!
             local j
             for j = 1, #item.child do
+
                 if item.child[j].name == "title" then
                     story.title = item.child[j].value
                 end
+                print (">>>>>>>>>>>>>>>>>>>>>" .. " " .. (item.child[j].name or "") .. " " .. (item.child[j].value or ""))
                 if item.child[j].name == "link" then
                     story.link = item.child[j].value
                 end
@@ -83,6 +86,17 @@ function feed(filename, base)
                     print("********** has thumbnail ************")
                     thumbnail = item.child[j].properties
                 end
+                -----------------------------------------------
+                ---- segbers added 
+                if item.child[j].name == "media:group" or item.child[j].name == "media:content" then
+                    for j2 = 1, #item.child[j].child do
+                         if item.child[j].child[j2].name == "media:thumbnail" then
+                            print("********** has thumbnail ************")
+                            thumbnail = item.child[j].child[j2].properties
+                        end
+                    end
+                end
+
                 -- Podcast's we have to handle differently
                 if item.child[j].name == "content:encoded" then
                     -- get the story body

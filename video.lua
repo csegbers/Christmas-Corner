@@ -11,6 +11,9 @@ local rss = require( "rss" )
 local myApp = require( "myapp" )
 local common = require( "common" )
 
+local currScene = (composer.getSceneName( "current" ) or "unknown")
+print ("In " .. currScene)
+
 -- forward declarations
 
 local feedName
@@ -24,20 +27,6 @@ local myList = nil
 local stories = {}
 local listGroup
 local imageList = {}
-
---
--- make a quick network connection to your server.. 
--- this requires the site's DNS Name, not a URL, in other words leave off
--- the http:// and no trailing things like /index.php
---
-local function testNetworkConnection()
-        local netConn = socket.connect('www.google.com', 80)
-        if netConn == nil then
-             return false
-        end
-        netConn:close()
-        return true
-end
 
 --
 -- this function gets called when we tap on a row.
@@ -119,7 +108,7 @@ local function onRowRender(event)
             --
             local w = event.target.width
             local h = event.target.height
-            local s = itemIcon.height / h
+            local s = 40 / h
             event.target:scale(s,s)
             if myApp.isGraphics2 then
                 event.target.anchorX = 0
@@ -135,43 +124,46 @@ local function onRowRender(event)
             row:insert(event.target)
             transition.to( event.target, {time=100, alpha = 1.0 } )
         end
-        print ( "RESPONSE: " .. event.response )
+        
     end
 
 
     -- check to see if I'm using embedded icons or showing something fixed.
     if icons == "embedded" then
+        if stories[id].thumbnail then
+            local filename = stories[id].title .. ".jpg"
+            display.loadRemoteImage( stories[id].thumbnail.url, "GET", thumbListener, filename, system.CachesDirectory, 0, 0 )
         --
-        -- lets check to see if we have any enclosures.  The entry must not be nil and there has to be at least one entry
-        -- (it is possible for enclosures to have an empty table that wouldn't be nil)
-        if stories[id].enclosures and #stories[id].enclosures > 0 then
-            -- check to see if it's an image.
-            -- an entry can have multiple enclosures.  They may not all be something we can display (audio, etc.) so loop 
-            -- over the enclosures and look for anything that is a type we can suppport.   This is case sensitive and I don't
-            -- know if every feed sends them in lower case.
-            --
-            local found = false
-            local j = 0
-            while j < #stories[id].enclosures and not found do
-                j = j + 1
-                local e = stories[id].enclosures[j]
-                if e.type == "image/jpeg" or e.type == "image/jpg" or e.type == "image/png" then
-                    --
-                    -- Ah Ha! we have a potentially displayable image
-                    -- create a local filename.  I suppose I could parse it out of the URL, but it really doesn't matter
-                    -- so make up one, but I do need to parse the extension off of the type.
-                    local filename = string.format("image_%3d.%s",id, string.sub(e.type, string.find(e.type,"/") + 1))
-                    --
-                    -- Now make Corona SDK do all the heavy lifting for me.  This little gem will fetch the URL, 
-                    -- store it in the Caches directory (to make Apple happy) and when complete it will call a function that
-                    -- will shove it into our row for us.  If the image is bad, or doesn't exist, then it won't display anything
-                    -- though it should drop a message into the console log.
-                    --
-                    display.loadRemoteImage( e.url, "GET", thumbListener, filename, system.CachesDirectory, 0, 0 )
-                end
-            end
-        end
-
+        -- -- lets check to see if we have any enclosures.  The entry must not be nil and there has to be at least one entry
+        -- -- (it is possible for enclosures to have an empty table that wouldn't be nil)
+        -- if stories[id].enclosures and #stories[id].enclosures > 0 then
+        --     -- check to see if it's an image.
+        --     -- an entry can have multiple enclosures.  They may not all be something we can display (audio, etc.) so loop 
+        --     -- over the enclosures and look for anything that is a type we can suppport.   This is case sensitive and I don't
+        --     -- know if every feed sends them in lower case.
+        --     --
+        --     local found = false
+        --     local j = 0
+        --     while j < #stories[id].enclosures and not found do
+        --         j = j + 1
+        --         local e = stories[id].enclosures[j]
+        --         if e.type == "image/jpeg" or e.type == "image/jpg" or e.type == "image/png" then
+        --             --
+        --             -- Ah Ha! we have a potentially displayable image
+        --             -- create a local filename.  I suppose I could parse it out of the URL, but it really doesn't matter
+        --             -- so make up one, but I do need to parse the extension off of the type.
+        --             local filename = string.format("image_%3d.%s",id, string.sub(e.type, string.find(e.type,"/") + 1))
+        --             --
+        --             -- Now make Corona SDK do all the heavy lifting for me.  This little gem will fetch the URL, 
+        --             -- store it in the Caches directory (to make Apple happy) and when complete it will call a function that
+        --             -- will shove it into our row for us.  If the image is bad, or doesn't exist, then it won't display anything
+        --             -- though it should drop a message into the console log.
+        --             --
+        --             display.loadRemoteImage( e.url, "GET", thumbListener, filename, system.CachesDirectory, 0, 0 )
+        --         end
+        --     end
+        -- end
+          end
     else
         --
         -- If you want an icon on the left side of the table view, define it here
@@ -183,6 +175,8 @@ local function onRowRender(event)
         row:insert(row.icon)
 
     end
+
+
     --
     -- Now create the first line of text in the table view with the headline
     -- of the story item.
@@ -335,7 +329,7 @@ function displayFeed(feedName, feedURL)
     -- be reached, then check for the cached version of the file.  
     --
     
-    local isReachable = testNetworkConnection()
+    local isReachable = common.testNetworkConnection()
     if isReachable then
         -- download the latest file
         -- show some indicator that we are busy
@@ -368,7 +362,7 @@ function displayFeed(feedName, feedURL)
 end
 
 local function tableViewListener(event)
-    print(event.phase)
+    
 end
 
 --
@@ -377,9 +371,8 @@ end
 
 function scene:create( event )
     local group = self.view
-
+    print ("Create  " .. currScene)
     
-
     params = event.params
         
     --
@@ -425,6 +418,7 @@ function scene:show( event )
     local group = self.view
     local phase = event.phase
     params = event.params
+    print ("Show:" .. phase.. " " .. currScene)
 
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
@@ -438,12 +432,11 @@ function scene:show( event )
         displayMode = params.displayMode
         pageTitle = params.pageTitle
         icons = params.icons
-
         --
         -- go fetch the feed
         --
         native.setActivityIndicator(true)
-        print("enterScene", feedName,feedURL)
+        print (feedName,feedURL, currScene)
         displayFeed(feedName, feedURL)
     elseif ( phase == "did" ) then
         -- Called when the scene is now on screen.
@@ -457,13 +450,12 @@ function scene:hide( event )
 
     local group = self.view
     local phase = event.phase
-
+    print ("Hide:" .. phase.. " " .. currScene)
     if ( phase == "will" ) then
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
             --
-        print("exit scene")
         purgeList(myList)
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
@@ -473,8 +465,7 @@ end
 
 function scene:destroy( event )
     local group = self.view
-    
-    print("destroy scene")
+    print ("Destroy "   .. currScene)
 end
 
 

@@ -45,7 +45,7 @@ local M = {
                                                 feedName = "video.rss",
                                                 --feedURL = "http://gdata.youtube.com/feeds/mobile/users/CoronaLabs/uploads?max-results=20&alt=rss&orderby=published&format=1",
                                                 feedURL = "http://gdata.youtube.com/feeds/mobile/users/StateAutoChristmas/uploads?max-results=20&alt=rss&orderby=published&format=1",
-                                               icons = "fixed",
+                                                icons = "embedded",
                                                 displayMode = "videoviewer",
                                                 pageTitle = "Corona Videos"
                                                    }                                
@@ -79,7 +79,7 @@ reallyPrint = print
 function print(...)
     if M.debugMode then
         reallyPrint("<-==============================================->") 
-        reallyPrint(unpack(arg))
+        reallyPrint(M.appName .. "-> " .. unpack(arg))
     end
 end
 print "In myapp.lua"
@@ -131,5 +131,7 @@ local iconInfo = {
 }
 
 M.icons = graphics.newImageSheet(M.imgfld.. "ios7icons.png", iconInfo)
+
+
 
 return M

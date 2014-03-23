@@ -1,4 +1,5 @@
 local myApp = require( "myapp" )
+local socket = require( "socket" )
 -------------------------------------------------------
 -- Store variables used across the app
 -------------------------------------------------------
@@ -10,6 +11,15 @@ function M.SceneBackground()
     background.x = myApp.cW / 2
     background.y = myApp.cH / 2
     return background
+end
+
+function M.testNetworkConnection()
+    local netConn = socket.connect('www.google.com', 80)
+    if netConn == nil then
+         return false
+    end
+    netConn:close()
+    return true
 end
 
 return M
