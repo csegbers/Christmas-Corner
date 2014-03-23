@@ -5,6 +5,11 @@
 local M = { 
             debugMode = true,
             appName = "Christmas Corner Initial" ,
+            cW = display.contentWidth,
+            cH = display.contentHeight,
+            cCx = display.contentCenterX,
+            cCy = display.contentCenterY,
+            tSbch = display.topStatusBarContentHeight,
             splashDelay = 150,    -- milliseconds
             saColor = { },
             saColorTrans = { },
@@ -13,49 +18,56 @@ local M = {
             colorDivisor = 255,
             isGraphics2 = true,
             is_iPad = false,
+            titleBarHeight = 50,
             imgfld = "images/",
+            scenesfld = "",
+            utilsfld = "utils.",
             theme = "widget_theme_ios7",
             font = "HelveticaNeue-Light",
             fontBold = "HelveticaNeue",
             fontItalic = "HelveticaNeue-LightItalic",
             fontBoldItalic = "Helvetica-BoldItalic",
+            screenStartTop = 0,     -- set elsewhere
             parse = {
                         appId = '',
                         restApikey = '',
+
                         getConfig = "https://api.parse.com/1/functions/getconfig",
 
                     },
             tabs = {
-                        tabbtnw = 32,tabbtnh = 32,
-                        home = {label="Home",lua="home",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
-                        menu = {label="Menu",lua="menu",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
-                        blogs = {
-                                  label="Blogs",lua="feed",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
-                                  options = {
-                                        feedName = "corona.rss",
-                                        feedURL = "http://www.coronalabs.com/feed/",
-                                        icons = "fixed",
-                                        displayMode = "webpage",
-                                        pageTitle = "Corona Labs"
-                                             }
-                                  },
-                       pics = {label="Pics",lua="photogallery",stime=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
-                       video = {
-                                    label="Video",lua="feed2",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
-                                    options = {
-                                            feedName = "video.rss",
-                                            feedURL = "http://gdata.youtube.com/feeds/mobile/users/CoronaLabs/uploads?max-results=20&alt=rss&orderby=published&format=1",
+                        tabbtnw = 32,tabbtnh = 32, tabBarHeight = 50,frameWidth = 20,
+                        btns = {
+                            home = {label="Home",lua="home",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                            video = {
+                                        label="Video",lua="video",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                        options = {
+                                                feedName = "video.rss",
+                                                --feedURL = "http://gdata.youtube.com/feeds/mobile/users/CoronaLabs/uploads?max-results=20&alt=rss&orderby=published&format=1",
+                                                feedURL = "http://gdata.youtube.com/feeds/mobile/users/StateAutoChristmas/uploads?max-results=20&alt=rss&orderby=published&format=1",
+                                               icons = "fixed",
+                                                displayMode = "videoviewer",
+                                                pageTitle = "Corona Videos"
+                                                   }                                
+                                    },                           menu = {label="Menu",lua="menu",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                            blogs = {
+                                      label="Blogs",lua="feed",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                      options = {
+                                            feedName = "corona.rss",
+                                            feedURL = "http://www.coronalabs.com/feed/",
                                             icons = "fixed",
-                                            displayMode = "videoviewer",
-                                            pageTitle = "Corona Videos"
-                                               }                                
-                                },
-                       maps = {
-                                    label="Maps",lua="mapscene",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
-                                    options = {
-                                            pageTitle = "Corona Headquarters"
-                                             }                              
-                                },
+                                            displayMode = "webpage",
+                                            pageTitle = "Corona Labs"
+                                                 }
+                                      },
+                           pics = {label="Pics",lua="photogallery",stime=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                           maps = {
+                                        label="Maps",lua="mapscene",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                        options = {
+                                                pageTitle = "Corona Headquarters"
+                                                 }                              
+                                    },
+                                }
                    },
 
         }

@@ -3,32 +3,45 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require( "widget" )
 local myApp = require( "myapp" )
-print ("In home "..myApp.appName)
+local common = require( "common" )
 
+print ("In home "..myApp.appName)
 
 
 function scene:create(event)
     print "menu createscene"
 	local group = self.view
-    local background = display.newRect(0,0,display.contentWidth, display.contentHeight)
-    background:setFillColor(242/myApp.colorDivisor, 242/myApp.colorDivisor, 242/myApp.colorDivisor, 255/myApp.colorDivisor)
-    background.x = display.contentWidth / 2
-    background.y = display.contentHeight / 2
-
+	local background = common.SceneBackground()
     group:insert(background)
 end
 
 function scene:show( event )
-	local group = self.view
+
+    local group = self.view
+    local phase = event.phase
+
+    if ( phase == "will" ) then
+        -- Called when the scene is still off screen (but is about to come on screen).
+    elseif ( phase == "did" ) then
+        -- Called when the scene is now on screen.
+        -- Insert code here to make the scene come alive.
+        -- Example: start timers, begin animation, play audio, etc.
+    end
+	
 
 end
 
 function scene:hide( event )
-	local group = self.view
+    local group = self.view
+    local phase = event.phase
 
-	--
-	-- Clean up native objects
-	--
+    if ( phase == "will" ) then
+        -- Called when the scene is on screen (but is about to go off screen).
+        -- Insert code here to "pause" the scene.
+        -- Example: stop timers, stop animation, stop audio, etc.
+    elseif ( phase == "did" ) then
+        -- Called immediately after scene goes off screen.
+    end
 
 end
 

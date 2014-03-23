@@ -1,42 +1,4 @@
--- Project: Business Sample App
---
--- File name: feed.lua
---
--- Author: Corona Labs
---
--- Abstract: Read an RSS Feed.
---
---
--- Target devices: simulator, device
---
--- Sample code is MIT licensed, see http://www.coronalabs.com/links/code/license
--- Copyright (C) 2013 Corona Labs Inc. All Rights Reserved.
----------------------------------------------------------------------------------------
---[[
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in the
-Software without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
-and to permit persons to whom the Software is furnished to do so, subject to the
-following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies
-or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-
-]]--
----------------------------------------------------------------------------------------
---
-
---local storyboard = require( "storyboard" )
---local scene = storyboard.newScene()
 local composer = require( "composer" )
 local scene = composer.newScene()
 
@@ -47,8 +9,7 @@ local widget = require( "widget" )
 -- local rss = require("atom")
 local rss = require( "rss" )
 local myApp = require( "myapp" )
-
-widget.setTheme(myApp.theme)
+local common = require( "common" )
 
 -- forward declarations
 
@@ -95,8 +56,9 @@ local onRowTouch = function( event )
             isModal = true,
             params = params
         }
-        storyboard.showOverlay(displayMode, options)
+        composer.showOverlay(displayMode, options)
     end
+
     return true
 end
 
@@ -413,7 +375,7 @@ end
 -- Start the Storyboard event handlers
 --
 
-function scene:createScene( event )
+function scene:create( event )
     local group = self.view
 
     
@@ -426,43 +388,8 @@ function scene:createScene( event )
     --
 
     print("create scene")
-    local background = display.newRect(0,0,display.contentWidth, display.contentHeight)
-    background:setFillColor(242/myApp.colorDivisor/myApp.colorDivisor, 242/myApp.colorDivisor, 242/myApp.colorDivisor, 255/myApp.colorDivisor)
-    background.x = display.contentWidth / 2
-    background.y = display.contentHeight / 2
-
+    local background = common.SceneBackground()
     group:insert(background)
-
-    local statusBarBackground = display.newImageRect(myApp.topBarBg, display.contentWidth, display.topStatusBarContentHeight)
-    statusBarBackground.x = display.contentCenterX
-    statusBarBackground.y = display.topStatusBarContentHeight * 0.5
-    group:insert(statusBarBackground)
-    --
-    -- Create the other UI elements
-    -- create toolbar to go at the top of the screen
-    local titleBar = display.newImageRect(myApp.topBarBg, display.contentWidth, 50)
-    titleBar.x = display.contentCenterX
-    titleBar.y = 25 + display.topStatusBarContentHeight
-    group:insert(titleBar)
-
-    --
-    -- set up the text for the title bar, will be changed based on what page
-    -- the viewer is on
-
-    -- create embossed text to go above toolbar
-    titleText = display.newText( params.pageTitle, 0, 0, myApp.fontBold, 20 )
-    if myApp.isGraphics2 then
-        titleText:setFillColor(1, 1, 1)
-    else
-        titleText:setTextColor( 255, 255, 255 )
-    end
-    titleText.x = display.contentCenterX
-    titleText.y = titleBar.height * 0.5 + display.topStatusBarContentHeight
-    group:insert(titleText)
-    --
-    -- Create the table view.  After the height of the top bar, the bottom tabBar
-    -- and room for the ad, we have room for a 320x320 area to hold the table view.
-    -- Since we are not using the whole screen we will need a mask file.
     --
 
     -- build a new tableView
@@ -479,7 +406,7 @@ function scene:createScene( event )
     end
 
     myList = widget.newTableView{ 
-        top = titleBar.height + display.topStatusBarContentHeight, 
+        top = myApp.screenStartTop, 
         width = tWidth, 
         height = tHeight , 
         maskFile = maskFile,
@@ -490,44 +417,61 @@ function scene:createScene( event )
     --
     -- insert the list into the group
     group:insert(myList)
+
 end
 
-function scene:enterScene( event )
-    local group = self.view
+function scene:show( event )
 
+    local group = self.view
+    local phase = event.phase
     params = event.params
 
-    print("enter scene")
- 
-    -- fetch the parameters from the storyboard table for this view
-    
-    feedName = params.feedName
-    feedURL = params.feedURL
-    displayMode = params.displayMode
-    pageTitle = params.pageTitle
-    icons = params.icons
+    if ( phase == "will" ) then
+        -- Called when the scene is still off screen (but is about to come on screen).
 
-    --
-    -- go fetch the feed
-    --
-    native.setActivityIndicator(true)
-    print("enterScene", feedName,feedURL)
-    displayFeed(feedName, feedURL)
+        print("enter scene")
+     
+        -- fetch the parameters from the storyboard table for this view
+        
+        feedName = params.feedName
+        feedURL = params.feedURL
+        displayMode = params.displayMode
+        pageTitle = params.pageTitle
+        icons = params.icons
+
+        --
+        -- go fetch the feed
+        --
+        native.setActivityIndicator(true)
+        print("enterScene", feedName,feedURL)
+        displayFeed(feedName, feedURL)
+    elseif ( phase == "did" ) then
+        -- Called when the scene is now on screen.
+        -- Insert code here to make the scene come alive.
+        -- Example: start timers, begin animation, play audio, etc.
+    end
 
 end
 
-function scene:exitScene( event )
+function scene:hide( event )
+
     local group = self.view
-    
-    -- get out of here.
-    -- dump the table entries
-    --
-    print("exit scene")
-    purgeList(myList)
+    local phase = event.phase
+
+    if ( phase == "will" ) then
+        -- Called when the scene is on screen (but is about to go off screen).
+        -- Insert code here to "pause" the scene.
+        -- Example: stop timers, stop animation, stop audio, etc.
+            --
+        print("exit scene")
+        purgeList(myList)
+    elseif ( phase == "did" ) then
+        -- Called immediately after scene goes off screen.
+    end
     
 end
 
-function scene:destoryScene( event )
+function scene:destroy( event )
     local group = self.view
     
     print("destroy scene")
@@ -538,19 +482,10 @@ end
 -- END OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
--- "createScene" event is dispatched if scene's view does not exist
-scene:addEventListener( "createScene", scene )
-
--- "enterScene" event is dispatched whenever scene transition has finished
-scene:addEventListener( "enterScene", scene )
-
--- "exitScene" event is dispatched before next scene's transition begins
-scene:addEventListener( "exitScene", scene )
-
--- "destroyScene" event is dispatched before view is unloaded, which can be
--- automatically unloaded in low memory situations, or explicitly via a call to
--- storyboard.purgeScene() or storyboard.removeScene().
-scene:addEventListener( "destroyScene", scene )
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 
 ---------------------------------------------------------------------------------
 

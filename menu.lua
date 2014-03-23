@@ -40,6 +40,7 @@ local scene = composer.newScene()
 
 local widget = require( "widget" )
 local myApp = require( "myapp" )
+local common = require( "common" )
 print ("In menu.lua "..myApp.appName)
  
 
@@ -60,13 +61,8 @@ function scene:create(event)
         print "menu createscene"
 	local group = self.view
 
-
-
-	local background = display.newRect(0,0,display.contentWidth, display.contentHeight)
-	background:setFillColor(242/myApp.colorDivisor, 242/myApp.colorDivisor, 242/myApp.colorDivisor, 255)
-    background.x = display.contentCenterX
-    background.y = display.contentCenterY
-	group:insert(background)
+    local background = common.SceneBackground()
+    group:insert(background)
 	background:addEventListener("touch", ignoreTouch)
 
     -- local statusBarBackground = display.newImageRect(myApp.topBarBg, display.contentWidth, display.topStatusBarContentHeight)

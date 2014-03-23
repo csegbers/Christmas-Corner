@@ -5,26 +5,14 @@ print ("splash: IN")
 
 local myApp = require( "myapp" ) 
 
-local background = display.newRect(0,0, display.contentWidth, display.contentHeight)
+local background = display.newRect(0,0, myApp.cW,myApp.cH)
 background:setFillColor(255/myApp.colorDivisor,255/myApp.colorDivisor,255/myApp.colorDivisor)
-background.x = display.contentCenterX
-background.y = display.contentCenterY
+background.x = myApp.cCx
+background.y = myApp.cCy
 
 local logo = display.newImageRect("salogo.jpg",305,170)
-logo.x = display.contentCenterX
-logo.y = display.contentCenterY
-
--- local title = display.newText(myApp.appName, 0, 0, myApp.fontBold, 28)
--- if myApp.isGraphics2 then
---     title:setFillColor( 0 )
--- else
---     title:setTextColor(0)
--- end
--- title.x = display.contentCenterX
--- title.y = display.contentHeight - 64
---
--- now make the first tab active.align
-
+logo.x = myApp.cCx
+logo.y = myApp.cCy
 
 local function closeSplash()
    local function closeSplashFinal()
@@ -41,7 +29,7 @@ local function closeSplash()
                 myApp.showScreen({key="home"})
     end
     local function closeSplash1()
-            transition.to( logo, {time=1500, alpha=0, x=(display.contentWidth+50), y=(display.contentHeight-500), onComplete=closeSplashFinal } )
+            transition.to( logo, {time=1500, alpha=0, x=(myApp.cW+50), y=(myApp.cH-500), onComplete=closeSplashFinal } )
 
    end
 
