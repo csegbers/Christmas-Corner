@@ -124,6 +124,13 @@ myApp.sceneStartTop = titleBar.height + myApp.tSbch
 myApp.sceneHeight = myApp.cH - myApp.sceneStartTop - myApp.tabBar.height
 myApp.sceneWidth = myApp.cW
 
+myApp.scenemaskFile = myApp.imgfld .. "mask-320x380.png"
+if myApp.is_iPad then
+    myApp.scenemaskFile = myApp.imgfld .. "mask-360x380.png"
+end
+if myApp.isTall then
+    myApp.scenemaskFile = myApp.imgfld .. "mask-320x448.png"
+end
 
 
 

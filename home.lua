@@ -16,6 +16,17 @@ function scene:create(event)
 	local group = self.view
 	local background = common.SceneBackground()
     group:insert(background)
+
+    -- local aline = display.newLine( 0, myApp.sceneStartTop,myApp.cW, myApp.sceneStartTop )
+    -- aline:setStrokeColor( 1, 0, 0, 1 )
+    -- aline.strokeWidth = 1
+    -- group:insert(aline)
+
+    -- local aline = display.newLine(0, myApp.sceneHeight+ myApp.sceneStartTop,myApp.cW, myApp.sceneHeight+ myApp.sceneStartTop )
+    -- aline:setStrokeColor( 1, 0, 0, 1 )
+    -- aline.strokeWidth = 1
+    -- group:insert(aline)
+
 end
 
 function scene:show( event )

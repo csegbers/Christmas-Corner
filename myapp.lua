@@ -30,6 +30,7 @@ local M = {
             sceneStartTop = 0,     -- set elsewhere
             sceneHeight = 0,     -- set elsewhere
             sceneWidth = 0,     -- set elsewhere
+            scenemaskFile = "",
             parse = {
                         appId = '7VPJbmZC067N3H79JZIrFXDzkFWCNFEsaBezDtsW',
                         restApikey = 'utglxB3RVEswoGl0AYuXa3UAKkgITiKvfio72pXB',
