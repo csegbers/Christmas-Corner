@@ -29,18 +29,20 @@ local M = {
             fontBoldItalic = "Helvetica-BoldItalic",
             screenStartTop = 0,     -- set elsewhere
             parse = {
-                        appId = '',
-                        restApikey = '',
+                        appId = '7VPJbmZC067N3H79JZIrFXDzkFWCNFEsaBezDtsW',
+                        restApikey = 'utglxB3RVEswoGl0AYuXa3UAKkgITiKvfio72pXB',
 
                         getConfig = "https://api.parse.com/1/functions/getconfig",
 
                     },
             tabs = {
-                        tabbtnw = 32,tabbtnh = 32, tabBarHeight = 50,frameWidth = 20,
+                        tabbtnw = 32,tabbtnh = 32, tabBarHeight = 50,frameWidth = 20,launchkey = "home",
                         btns = {
-                            home = {label="Home",lua="home",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                            home = {
+                                        label="Home",lua="home",title="Christmas Corner",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"
+                                    },
                             video = {
-                                        label="Video",lua="video",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                        label="Video",lua="video",title="Video",time=250, effect="slideRight",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
                                         options = {
                                                 feedName = "video.rss",
                                                 --feedURL = "http://gdata.youtube.com/feeds/mobile/users/CoronaLabs/uploads?max-results=20&alt=rss&orderby=published&format=1",
@@ -49,9 +51,12 @@ local M = {
                                                 displayMode = "videoviewer",
                                                 pageTitle = "Corona Videos"
                                                    }                                
-                                    },                           menu = {label="Menu",lua="menu",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                                    },
+                            menu = {
+                                        label="Menu",lua="menu",title="Menu",time=250, effect="slideDown",def="images/tabbaricon.png",over="images/tabbaricon-down.png"
+                                    },
                             blogs = {
-                                      label="Blogs",lua="feed",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                      label="Blogs",lua="feed",title="Blog",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
                                       options = {
                                             feedName = "corona.rss",
                                             feedURL = "http://www.coronalabs.com/feed/",
@@ -60,9 +65,9 @@ local M = {
                                             pageTitle = "Corona Labs"
                                                  }
                                       },
-                           pics = {label="Pics",lua="photogallery",stime=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+                           pics = {label="Pics",lua="photogallery",title="Pics",stime=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
                            maps = {
-                                        label="Maps",lua="mapscene",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
+                                        label="Maps",lua="mapscene",title="Maps",time=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png",
                                         options = {
                                                 pageTitle = "Corona Headquarters"
                                                  }                              
@@ -132,6 +137,29 @@ local iconInfo = {
 
 M.icons = graphics.newImageSheet(M.imgfld.. "ios7icons.png", iconInfo)
 
-
-
 return M
+
+
+
+-- The following string values are supported for the effect key of the options table:
+
+-- "fade"
+-- "crossFade"
+-- "zoomOutIn"
+-- "zoomOutInFade"
+-- "zoomInOut"
+-- "zoomInOutFade"
+-- "flip"
+-- "flipFadeOutIn"
+-- "zoomOutInRotate"
+-- "zoomOutInFadeRotate"
+-- "zoomInOutRotate"
+-- "zoomInOutFadeRotate"
+-- "fromRight" — over current scene
+-- "fromLeft" — over current scene
+-- "fromTop" — over current scene
+-- "fromBottom" — over current scene
+-- "slideLeft" — pushes current scene off
+-- "slideRight" — pushes current scene off
+-- "slideDown" — pushes current scene off
+-- "slideUp" — pushes current scene off

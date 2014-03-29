@@ -12,7 +12,7 @@ local myApp = require( "myapp" )
 local common = require( "common" )
 
 local currScene = (composer.getSceneName( "current" ) or "unknown")
-print ("In " .. currScene)
+print ("In " .. currScene .. " Scene")
 
 -- forward declarations
 

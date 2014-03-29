@@ -1,12 +1,15 @@
 ---------------------------------------------------------------------------------------
+-- HOME scene
+---------------------------------------------------------------------------------------
 local composer = require( "composer" )
 local scene = composer.newScene()
+
 local widget = require( "widget" )
 local myApp = require( "myapp" )
 local common = require( "common" )
 
 local currScene = (composer.getSceneName( "current" ) or "unknown")
-print ("In " .. currScene)
+print ("In " .. currScene .. " Scene")
 
 function scene:create(event)
     print ("Create  " .. currScene)

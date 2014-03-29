@@ -4,6 +4,23 @@ print ("tabandtop: IN")
 
 local myApp = require( "myapp" ) 
 local widget = require( "widget" )
+local common = require( "common" )
+
+----------------------------------------------------------
+--    background 
+----------------------------------------------------------
+myApp.backGroup = display.newGroup( )
+
+
+local background = common.SceneBackground()
+
+local backlogo = display.newImageRect("salogo.jpg",305,170)
+backlogo.x = myApp.cCx
+backlogo.y = myApp.cCy
+backlogo.alpha = .1
+
+myApp.backGroup:insert(background)
+myApp.backGroup:insert(backlogo)
 
 ----------------------------------------------------------
 --    Top Title Bar stuff
@@ -17,6 +34,7 @@ myApp.TitleGroup = display.newGroup( )
 local statusBarBackground = display.newImageRect(myApp.topBarBg, myApp.cW, myApp.tSbch)
 statusBarBackground.x = myApp.cCx
 statusBarBackground.y = myApp.tSbch * .5  
+statusBarBackground.alpha = .5
 myApp.TitleGroup:insert(statusBarBackground)
 
 ----------------------------------------------------------
@@ -30,7 +48,7 @@ myApp.TitleGroup:insert(titleBar)
 ----------------------------------------------------------
 --   text in the Titlebar
 ----------------------------------------------------------
-local titleText = display.newText( myApp.appName, 0, 0, myApp.fontBold, 20 )
+local titleText = display.newText(myApp.tabs.btns[myApp.tabs.launchkey].title, 0, 0, myApp.fontBold, 20 )
 if myApp.isGraphics2 then
     titleText:setFillColor(1, 1, 1)
 else
@@ -38,7 +56,8 @@ else
 end
 titleText.x = myApp.cCx
 titleText.y = titleBar.height * 0.5 + myApp.tSbch 
-myApp.TitleGroup:insert(titleText)
+myApp.TitleGroup.titleText = titleText
+myApp.TitleGroup:insert(myApp.TitleGroup.titleText)
 
 
 
@@ -102,3 +121,9 @@ myApp.tabBar = widget.newTabBar{
 --   Common info fot the screens
 ----------------------------------------------------------
 myApp.screenStartTop = titleBar.height + display.topStatusBarContentHeight
+
+
+
+
+
+
