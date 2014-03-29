@@ -1,4 +1,6 @@
-
+---------------------------------------------------------------------------------------
+-- Video scene
+---------------------------------------------------------------------------------------
 local composer = require( "composer" )
 local scene = composer.newScene()
 
@@ -375,12 +377,6 @@ function scene:create( event )
     
     params = event.params
         
-    --
-    -- setup a page background, really not that important though storyboard
-    -- crashes out if there isn't a display object in the view.
-    --
-
-    print("create scene")
     local background = common.SceneBackground()
     group:insert(background)
     --
@@ -399,7 +395,7 @@ function scene:create( event )
     end
 
     myList = widget.newTableView{ 
-        top = myApp.screenStartTop, 
+        top = myApp.sceneStartTop, 
         width = tWidth, 
         height = tHeight , 
         maskFile = maskFile,

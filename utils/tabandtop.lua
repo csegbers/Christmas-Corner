@@ -120,7 +120,9 @@ myApp.tabBar = widget.newTabBar{
 ----------------------------------------------------------
 --   Common info fot the screens
 ----------------------------------------------------------
-myApp.screenStartTop = titleBar.height + display.topStatusBarContentHeight
+myApp.sceneStartTop = titleBar.height + myApp.tSbch
+myApp.sceneHeight = myApp.cH - myApp.sceneStartTop - myApp.tabBar.height
+myApp.sceneWidth = myApp.cW
 
 
 
