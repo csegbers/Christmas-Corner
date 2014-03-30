@@ -75,6 +75,8 @@ local M = {
                                                 pageTitle = "Corona Headquarters"
                                                  }                              
                                     },
+                          debug = {label="Debug",lua="debugapp",title="debug",stime=250, effect="crossFade",def="images/tabbaricon.png",over="images/tabbaricon-down.png"},
+
                                 }
                    },
 

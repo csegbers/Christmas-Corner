@@ -99,8 +99,8 @@ addtabBtn("video")
 addtabBtn("menu")
 addtabBtn("blogs")
 addtabBtn("pics")
-
 addtabBtn("maps")
+addtabBtn("debug")
 
 myApp.tabBar = widget.newTabBar{
     top =  myApp.cH - myApp.tabs.tabBarHeight ,
