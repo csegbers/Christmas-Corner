@@ -1,6 +1,6 @@
 
 -------------------------------------------------------
--- Store variables used across the app
+-- Store variables used across the entire app 
 -------------------------------------------------------
 local M = { 
             debugMode = true,
